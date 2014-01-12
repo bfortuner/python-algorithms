@@ -7,6 +7,7 @@ class Node(object):
     def __init__(self, item):
         self.item = item
         self.next = None
+        self.last = None
 
     def setNext(self, new_next):
         self.next = new_next
@@ -36,36 +37,135 @@ class LinkedList(object):
 
     def size(self):
         current_node = self.head
-        if current_node != None:
-            node_count = 1
-        else:
-            node_count = 0
-            
-        while current_node.getNext() != None:
+        node_count = 0
+        while current_node != None:
             node_count += 1
             current_node = current_node.getNext()
         return node_count
 
+    def search(self, value):
+        current_node = self.head
+        found = False
+        while current_node != None and not found:
+            if current_node.getItem() == value:
+                return True
+            else:
+                current_node = current_node.getNext()
+        return found
+
+    def remove(self, value):
+        if self.size() == 0:
+            return
+        if self.head.getItem() == value:
+            self.head = self.head.getNext()
+            return
+        prior_node = self.head
+        while prior_node.getNext() != None:
+            current_node = prior_node.getNext()
+            if current_node.getItem() == value:
+                prior_node.setNext(current_node.getNext())
+                return
+            else:
+                prior_node = current_node
+                current_node = current_node.getNext()
+        return
 
 
+    # Append new node to end of list - O(n)
+    def append(self, value):
+        new_node = Node(value)
+        current = self.head
+        if current == None:
+            self.head = new_node
+        while current.getNext() != None:
+            current = current.getNext()
+        current.setNext(new_node)
+
+    # Append new node to end of list - O(1)
+    def append_constant_time(self, value):
+        new_node = Node(value)
+        self.last.setNext(new_node)
+        self.last = new_node
+        
+    # Add new item at position pos in list - O(n)
+    def insert(self, pos, value):
+        if pos == 0:
+            self.add(value)
+            return
+        new_node = Node(value)
+        count = 0
+        current = self.head
+        prior = None
+        while count < pos and current != None:
+            prior = current
+            current = current.getNext()
+            count += 1
+        new_node.setNext(current)
+        prior.setNext(new_node)
+        
+    # Return position of value in list - O(n)
+    def index(self, value):
+        pos = 0
+        current = self.head
+        while current != None and current.getItem() != value:
+            current = current.getNext()
+            pos += 1
+        if current == None:
+            return None
+        else:
+            return pos
+
+    # Remove element in position pos or remove last element
+    def pop(self, pos=None):
+        if pos == None:
+            pos = self.size() - 1
+        if pos == 0:
+            tmp = self.head.getItem()
+            self.head = self.head.getNext()
+            return tmp
+        current = self.head
+        prior = None
+        count = 0
+        while count < pos:
+            prior = current
+            current = current.getNext()
+            count += 1
+        prior.setNext(current.getNext())
+        return current.getItem()
+
+            
+
+
+
+# Test cases for linked list 
 ll = LinkedList()
-#print ll.isEmpty()
-#print ll.head
-n1 = Node('hey')
-#print ll.head
-n2 = Node(4)
-n3 = Node(True)
 
-#print n1.getItem()
-#print n2.getItem()
-#print n3.getItem()
 
-ll.add(n1)
-ll.add(n2)
-ll.add(n2)
 
-head = ll.head
-head.getItem()
 
-#print ll.size()    
-#print ll.isEmpty()
+ll.add('hey')
+
+ll.remove('hey')
+print ll.size()
+
+ll.add(True)
+ll.add('hey')
+ll.add('bab')
+ll.add(123)
+print ll.size()
+print ll.head.getItem()
+ll.remove('hey')
+print ll.size()
+print ll.head.getItem()
+ll.remove('hey')
+ll.remove(True)
+ll.search('hey')
+ll.search(123)
+print ll.size()
+
+ll.append('brendan')
+print ll.search('brendan')
+ll.append('colin')
+print "------- pop -------"
+print ll.pop(0)
+print ll.index('colin')
