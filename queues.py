@@ -21,10 +21,11 @@ class Queue(object):
 
 
 
-
+import random
 # Hot Potato Simulation
-def hot_potato_sim(num, people):
+def hot_potato_sim(people):
     circle = Queue()
+    people_count = len(people)
     for person in people:
         print "Added new person to circle: %s" % person
         circle.enqueue(person)
@@ -32,7 +33,8 @@ def hot_potato_sim(num, people):
 
     while circle.size() > 1:
         i = 1
-        while i < num:
+        chance = random.randrange(1,circle.size()+1)
+        while i < chance: 
             print i
             p = circle.dequeue()
             circle.enqueue(p)
@@ -43,8 +45,8 @@ def hot_potato_sim(num, people):
     print "Winner is %s" % winner
     return winner
     
-import random
-#print hot_potato_sim(random.randrange(10),['brendan','colin','liam','mom','dad'])
+
+print hot_potato_sim(['brendan','colin','liam','mom','dad'])
 
 
 
@@ -114,9 +116,9 @@ def simulation(runtime_seconds, printer, print_queue, seconds_per_task):
     return average(print_queue.waiting_times), print_queue.getSize()
 
 
-for i in range(10):
-    sim_results = simulation(3600, Printer(12), PrintQueue(), 180)
-    print "Average Wait %6.2f seconds %3d tasks remaining" % (sim_results[0], sim_results[1])
+#for i in range(10):
+#    sim_results = simulation(3600, Printer(12), PrintQueue(), 180)
+#    print "Average Wait %6.2f seconds %3d tasks remaining" % (sim_results[0], sim_results[1])
 
 def run_simulation(num_times):
     avg_waiting_times = []
