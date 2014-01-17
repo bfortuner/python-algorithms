@@ -109,10 +109,25 @@ class BinaryGate(LogicGate):
 
     # Ask user to provide label for each Pin (1 or 0)
     def getPinA(self):
-        return int(input("Enter Pin A input for gate "+ self.getLabel()+"-->"))
+        if self.pinA == None:
+            return int(input("Enter Pin A input for gate "+ self.getLabel()+"-->"))
+        else:
+            return self.pinA.getFrom().getOutput()
 
     def getPinB(self):
-        return int(input("Enter Pin B input for gate "+ self.getLabel()+"-->"))
+        if self.pinB == None:
+            return int(input("Enter Pin B input for gate "+ self.getLabel()+"-->"))
+        else:
+            return self.pinB.getFrom().getOutput()
+
+    def setNextPin(self, source):
+        if self.pinA == None:
+            self.pinA = source
+        else:
+            if self.pinB == None:
+                self.pinB = source
+            else:
+                raise RuntimeError("Error: NO EMPTY PINS")
 
 
 # Child class of BinaryGate that holds AND gate
@@ -142,10 +157,10 @@ class OrGate(BinaryGate):
         else:
             return 0
     
-ag = AndGate("A1")
-og = OrGate("O1")
-print ag.getOutput()
-print og.getOutput()
+#ag = AndGate("A1")
+#og = OrGate("O1")
+#print ag.getOutput()
+#print og.getOutput()
 
 
 # Child class of LogicGate that holds NOT class
@@ -158,6 +173,12 @@ class UnaryGate(LogicGate):
     def getPin(self):
         return int(input("Enter Pin input for gate "+ self.getLabel()+"-->"))
 
+    def setNextPin(self,source):
+        if self.pin == None:
+            self.pin = source
+        else:
+            print("Cannot Connect: NO EMPTY PINS on this gate")
+
     
 
 # Child class of UnaryGate that holds NOT class
@@ -165,13 +186,44 @@ class NotGate(UnaryGate):
     def __init__(self, n):
         UnaryGate.__init__(self, n)
     
-    def performGateLogic(self, result):
-        if result == 1:
+    def performGateLogic(self):
+        if self.getPin():
             return 0
         else:
             return 1
 
-ng = NotGate("N1")
-print ng.performGateLogic(ag.getOutput())
+#ng = NotGate("N1")
+#print ng.performGateLogic(ag.getOutput())
 
 
+
+
+# Connector class to connect two Gates
+# HAS-A relationship with LogicGate
+class Connector:
+    def __init__(self, fgate, tgate):
+        # Requires two Gate instances
+        self.fromgate = fgate
+        self.togate = tgate
+
+        tgate.setNextPin(self)
+
+    def getFrom(self):
+        return self.fromgate
+
+    def getTo(self):
+        return self.togate
+
+
+ 
+
+
+g1 = AndGate("G1")
+g2 = AndGate("G2")
+g3 = OrGate("G3")
+g4 = NotGate("G4")
+c1 = Connector(g1,g3)
+c2 = Connector(g2,g3)
+c3 = Connector(g3,g4)
+
+print g4.getOutput()
