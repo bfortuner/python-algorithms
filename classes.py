@@ -1,6 +1,20 @@
 #### Python OOP Review ####
 
+from __future__ import division
 
+
+
+
+# Return greatest common denominator of two numbers (the largest number that can be divided evenly into each)
+def gcd(m,n):
+    while m%n != 0:
+        oldm = m
+        oldn = n
+
+        m = oldn
+        n = oldm%oldn
+    return n
+        
 
 # Fraction class
 class Fraction(object):
@@ -21,6 +35,26 @@ class Fraction(object):
         new_num = (self.num * otherfraction.den) + (otherfraction.num * self.den)
         return Fraction(new_num, new_den).lowestTerms()
 
+    # Override default subtraction method in Python
+    def __sub__(self,otherfraction):
+        new_den = self.den * otherfraction.den
+        new_num = (self.num * otherfraction.den) - (otherfraction.num * self.den)
+        common = gcd(new_num,new_den)
+        return Fraction(new_num//common, new_den//common)
+
+
+    def __truediv__(self,otherfraction):
+        newnum = self.num * otherfraction.den
+        newden = self.den * otherfraction.num
+        common = gcd(newnum,newden)
+        return Fraction(newnum//common,newden//common)
+    
+    def __mul__(self, otherfraction):
+        newnum = self.num * otherfraction.num
+        newden = self.den * otherfraction.den
+        common = gcd(newnum,newden)
+        return Fraction(newnum//common, newden//common)
+
     # Reduce fraction to lowest terms
     def lowestTerms(self):
         i = 1
@@ -36,8 +70,14 @@ class Fraction(object):
         second_num = otherfraction.num * self.den
         return first_num == second_num
 
+    
 
-
+f1 = Fraction(3,6)
+f2 = Fraction(2,4)
+#print f1 + f2
+#print f1 - f2
+#print f1 * f2
+print f1 / f2
 
 # Python multiplication function
 def multiply(a,b):
@@ -217,7 +257,7 @@ class Connector:
 
  
 
-
+'''
 g1 = AndGate("G1")
 g2 = AndGate("G2")
 g3 = OrGate("G3")
@@ -227,3 +267,4 @@ c2 = Connector(g2,g3)
 c3 = Connector(g3,g4)
 
 print g4.getOutput()
+'''

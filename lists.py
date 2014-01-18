@@ -92,6 +92,7 @@ class LinkedList(object):
         current = self.head
         if current == None:
             self.head = new_node
+            return
         while current.getNext() != None:
             current = current.getNext()
         current.setNext(new_node)
@@ -210,7 +211,7 @@ print ll.index('colin')
 
 
 # Ordered List Class
-class Ordered List(object):
+class OrderedList(object):
     def __init__(self):
         self.head = None
 
@@ -236,4 +237,4 @@ class Ordered List(object):
             prior.setNext(new_node)
             new_node.setNext(current)
 
-print 11
+

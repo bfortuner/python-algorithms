@@ -247,11 +247,77 @@ def extractBrackets(html):
             i += 1
     return d
 
-tmp = extractBrackets(html_doc)
-while tmp.size() > 1:
-    print tmp.removeRear()
-    print tmp.removeFront()
+#tmp = extractBrackets(html_doc)
+#while tmp.size() > 1:
+#    print tmp.removeRear()
+#    print tmp.removeFront()
 
 #def validHTML2(html):
 #    d = extractBrackets(html)
+
+
+
+#### Linked List Data Structure ####
+
+from lists import Node, LinkedList
+
+
+# Stack implementation w Linked List
+class Stack:
+    def __init__(self):
+        self.items = LinkedList()
+
+    def getItems(self):
+        return self.items
+
+    def size(self):
+        return self.items.size()
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def isEmpty(self):
+        return self.items.isEmpty()
     
+
+
+'''
+s1 = Stack()
+print s1.size()
+print s1.push('hey')
+print s1.pop()
+print s1.push(3)
+print s1.push(2)
+print s1.getItems()
+print s1.size()
+print s1.isEmpty()
+
+'''
+
+
+
+# Queue class implementation                                                                                                     
+# Constant time enqueue and dequeue
+# Because LinkedList implementation Append and Pop add/remove the first item --> O(1)
+class Queue(object):
+    def __init__(self):
+        self.items = []
+        # Store the index of the last item for constant time push and pop
+        self.last = -1
+
+    def isEmpty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.last += 1
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        self.last -= 1
+        return self.items.pop()
+        
+    def size(self):
+        return len(self.items)
