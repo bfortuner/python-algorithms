@@ -42,12 +42,13 @@ class Deque(object):
 def isPalindrome(str1):
     deque = Deque()
     for c in str1:
-        deque.addFront(c)
+        if c != ' ':
+            deque.addFront(c)
     while deque.size() > 1:
         if deque.removeFront() != deque.removeRear():
             return False
     return True
 
 
-print isPalindrome('')
+#print isPalindrome(' a b a b')
         
