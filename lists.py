@@ -142,7 +142,7 @@ ll = LinkedList()
 
 
 
-
+"""
 ll.add('hey')
 
 ll.remove('hey')
@@ -169,3 +169,35 @@ ll.append('colin')
 print "------- pop -------"
 print ll.pop(0)
 print ll.index('colin')
+"""
+
+
+
+# Ordered List Class
+class Ordered List(object):
+    def __init__(self):
+        self.head = None
+
+    def search(self, value):
+        current = self.head
+        while current != None and current.getItem() <= value:
+            if current.getItem() == value:
+                return True
+            else:
+                current = current.getNext()
+        return False
+
+    def add(self, value):
+        new_node = Node(value)
+        current = self.head
+        prior = None
+        while current != None and current.getItem() < value:
+            prior = current
+            current = current.getNext()
+        if prior == None:
+            self.head = new_node
+        else:
+            prior.setNext(new_node)
+            new_node.setNext(current)
+
+

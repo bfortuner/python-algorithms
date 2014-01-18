@@ -88,7 +88,9 @@ def base_converter(num, base):
     return binary_str
 
 #print base_converter(2453298738763, 26)
-
+print base_converter(17,2)
+print base_converter(45,2)
+print base_converter(96,2)
 
 
 
@@ -120,13 +122,18 @@ def infixToPostfix(infixexpr):
                (prec[opStack.peek()] >= prec[token]):
                   postfixList.append(opStack.pop())
             opStack.push(token)
-
+        
     while not opStack.isEmpty():
         postfixList.append(opStack.pop())
     return " ".join(postfixList)
 
-print(infixToPostfix("A * B + C * D"))
-print(infixToPostfix("( A + B ) * C - ( D - E ) * ( F + G )"))
+#print(infixToPostfix("A * B + C * D"))
+#print(infixToPostfix("( A + B ) * C - ( D - E ) * ( F + G )"))
+
+print infixToPostfix("( A + B ) * ( C + D ) * ( E + F )")
+print infixToPostfix("A + ( ( B + C ) * ( D + E ) )")
+print infixToPostfix("A * B * C * D + E + F")
+
 
 
 def infixToPostfix(infixexpr):
@@ -160,8 +167,8 @@ def infixToPostfix(infixexpr):
         postfixList.append(opStack.pop())
     return " ".join(postfixList)
 
-print(infixToPostfix("A * B + C * D"))
-print(infixToPostfix("( A + B ) * C - ( D - E ) * ( F + G )"))
+#print(infixToPostfix("A * B + C * D"))
+#print(infixToPostfix("( A + B ) * C - ( D - E ) * ( F + G )"))
 
 
 #tl ["A","*","B","+","C","*","D"]

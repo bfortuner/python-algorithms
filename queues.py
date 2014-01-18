@@ -20,6 +20,80 @@ class Queue(object):
         return len(self.items)
 
 
+# Queue class implementation - Rear of Queue at end of List
+class QueueRear(object):
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.append(item)
+
+    def dequeue(self):
+        return self.items.pop(0)
+
+    def size(self):
+        return len(self.items)
+
+
+
+# Python timit module                                                                                                            
+from timeit import *
+
+q1 = Queue()
+q2 = QueueRear()
+def q1_enqueue():
+    q1.enqueue('hey')
+    q1.enqueue(3)
+    q1.enqueue(True)
+
+def q2_enqueue():
+    q2.enqueue('hey')
+    q2.enqueue(3)
+    q2.enqueue(True)
+
+def q1_dequeue():
+    q1.dequeue()
+    q1.dequeue()
+    q1.dequeue()
+
+def q2_dequeue():
+    q2.dequeue()
+    q2.dequeue()
+    q2.dequeue()
+    
+
+t1 = Timer("q1_enqueue()", "from __main__ import q1_enqueue")
+print ("q1 enqueue:",t1.timeit(number=1000), "milliseconds")                                                                        
+
+t2 = Timer("q2_enqueue()", "from __main__ import q2_enqueue")
+print("q2 enqueue",t2.timeit(number=1000), "milliseconds")                                                                          
+
+t3 = Timer("q1_dequeue()", "from __main__ import q1_dequeue")
+print("q1 dequeue",t3.timeit(number=1000), "milliseconds")                                                                          
+
+t4 = Timer("q2_dequeue()", "from __main__ import q2_dequeue")
+print("q2 dequeue",t4.timeit(number=1000), "milliseconds")                                                                          
+
+
+def test_dict_del(l, num):
+    rand_index = random.randrange(num)
+    #del x[rand_index]                                                                                                               
+
+
+# Compare del with list vs dict                                                                                                
+"""                                                                                                                          
+for i in range(1000,1000000,20000):                                                                                           
+    x_list = list(range(i))                                                                                                   
+    list_t = Timer("test_list_del(%s, %d)" % (x_list, i),"from __main__ import random, x_list, test_list_del")                
+    list_time = list_t.timeit(number=1000)                                                                                    
+    x_dict = {j:None for j in range(i)}                                                                                      
+    dict_t = Timer("test_dict_del(%s, %d)" % (x_dict, i),"from __main__ import random, x_dict, test_dict_del")                  
+    dict_time = dict_t.timeit(number=1000)                                                                                      
+    print "i: %d, list: %.9f, dict: %.9f" % (i, list_time, dict_time)                                                             
+"""
 
 
 # Hot Potato Simulation
@@ -114,9 +188,11 @@ def simulation(runtime_seconds, printer, print_queue, seconds_per_task):
     return average(print_queue.waiting_times), print_queue.getSize()
 
 
+'''
 for i in range(10):
     sim_results = simulation(3600, Printer(12), PrintQueue(), 180)
     print "Average Wait %6.2f seconds %3d tasks remaining" % (sim_results[0], sim_results[1])
+'''
 
 def run_simulation(num_times):
     avg_waiting_times = []
