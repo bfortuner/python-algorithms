@@ -84,7 +84,7 @@ def insertion_sort(alist):
 sub = [1,2,3]
 l1 = [3,2,1,4,3]
 
-print insertion_sort(l1)
+#print insertion_sort(l1)
 
 
 # Insertion Sort - Textbook - No sublist
@@ -103,4 +103,60 @@ def insertionSort(alist):
          position = position-1
 
      alist[position]=currentvalue
+
+# k = 0
+# while not end
+# Sort 0,3,6 using insertion sort variant w gap
+    # keep track of location of next element in sublist
+    # Add 3 each time
+    # Compare that value one-at-a-time backwards using 3 as increment
+    # until it reaches k (which is 0 the first time)
+    # Then it skips 3, checks if is position is greater than length of list
+    # if position is > length of list, it changes end to True
+    # increments k += 1
+
+# After gap items are sorted, so a normal insertion sort
+# Complete
+
+
+# Sub-insertion sort function that takes gap into account
+
+
+
+
+
+# Shell Sort
+def shell_sort(alist, gap):
+    i = 0
+    while i < len(alist)/gap:
+        alist = gapInsertionSort(alist, i, gap)
+        i += 1
+    return gapInsertionSort(alist, 0, 1)
+
+
+# Gap Insertion Sort (for Shell Sort)
+l2 = [9,8,7,6,5,4,3,2,1]
+def gapInsertionSort(alist, start_pos, gap):
+    for index in range(start_pos+gap, len(alist), gap): # 9, 6, 3, end!
+        current_value = alist[index]
+        position = index
+        while position > start_pos and current_value < alist[position-gap]:
+            alist[position] = alist[position-gap]
+            position = position - gap
+        alist[position] = current_value
+    return alist
+    
+
+
+l1 = [54,26,93,17,77,31,44,55,20]
+l2 = [9,8,7,6,5,4,3,2,1]
+#print gapInsertionSort(l1, 0, 3)
+print shell_sort_2(l1, 3)
+
+
+
+ 
+
+
+
 
