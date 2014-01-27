@@ -151,9 +151,62 @@ def gapInsertionSort(alist, start_pos, gap):
 l1 = [54,26,93,17,77,31,44,55,20]
 l2 = [9,8,7,6,5,4,3,2,1]
 #print gapInsertionSort(l1, 0, 3)
-print shell_sort_2(l1, 3)
+#print shell_sort_2(l1, 3)
 
 
+
+
+# Sort the left side and right side separately, then return right_side + left_side!
+# Merge Sort!
+def merge_sort(alist):
+    if len(alist) <= 1:
+        return alist
+    else:
+        first = alist[:len(alist)/2]
+        second = alist[len(alist)/2:]
+        left_side = merge_sort(first)
+        right_side = merge_sort(second)
+        return left_side + right_side
+
+        left_tmp = left_side
+        right_tmp = right_side
+
+        if len(left_tmp) <= len(right_tmp):
+            print 'left side less then right_tmp'
+            new_list = []
+            while len(left_tmp) > 0 and len(right_tmp) > 0:
+                if left_tmp[0] <= right_tmp[0]:
+                    new_list += [left_tmp[0]]
+                    left_tmp = left_tmp[1:]
+                else:
+                    new_list += [right_tmp[0]]
+                    right_tmp = right_tmp[1:]
+            if len(right_tmp) == 1:
+                new_list += [right_tmp]
+            else:
+                new_list += right_tmp
+
+        else:
+            print 'right side less than left side'
+            new_list = []
+            while len(right_tmp) > 0:
+                if right_tmp[0] <= left_tmp[0]:
+                    new_list += right_tmp[0]
+                    right_tmp = right_tmp[1:]
+                else:
+                    new_list += left_tmp[0]
+                    left_tmp = left_tmp[1:]
+            if len(left_tmp) == 1:
+                new_list += [left_tmp]
+            else:
+                new_list += left_tmp
+
+        return new_list
+
+
+
+l1 = [54,26,93,17,77,31,44,55,20]
+print merge_sort(l1)
 
  
 
