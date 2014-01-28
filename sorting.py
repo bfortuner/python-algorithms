@@ -126,7 +126,7 @@ def insertionSort(alist):
 
 
 # Shell Sort
-def shell_sort(alist, gap):
+def shell_sort(alist, gap=3):
     i = 0
     while i < len(alist)/gap:
         alist = gapInsertionSort(alist, i, gap)
@@ -159,57 +159,78 @@ l2 = [9,8,7,6,5,4,3,2,1]
 # Sort the left side and right side separately, then return right_side + left_side!
 # Merge Sort!
 def merge_sort(alist):
+
     if len(alist) <= 1:
         return alist
+
     else:
         first = alist[:len(alist)/2]
         second = alist[len(alist)/2:]
         left_side = merge_sort(first)
         right_side = merge_sort(second)
-        return left_side + right_side
 
-        left_tmp = left_side
-        right_tmp = right_side
+        sorted_list = []
+        left_i = 0
+        right_i = 0
 
-        if len(left_tmp) <= len(right_tmp):
-            print 'left side less then right_tmp'
-            new_list = []
-            while len(left_tmp) > 0 and len(right_tmp) > 0:
-                if left_tmp[0] <= right_tmp[0]:
-                    new_list += [left_tmp[0]]
-                    left_tmp = left_tmp[1:]
-                else:
-                    new_list += [right_tmp[0]]
-                    right_tmp = right_tmp[1:]
-            if len(right_tmp) == 1:
-                new_list += [right_tmp]
+        while left_i < len(left_side) and right_i < len(right_side):
+
+            if left_side[left_i] <= right_side[right_i]:
+                sorted_list += [left_side[left_i]]
+                left_i += 1
+
             else:
-                new_list += right_tmp
+                sorted_list += [right_side[right_i]]
+                right_i += 1
 
-        else:
-            print 'right side less than left side'
-            new_list = []
-            while len(right_tmp) > 0:
-                if right_tmp[0] <= left_tmp[0]:
-                    new_list += right_tmp[0]
-                    right_tmp = right_tmp[1:]
-                else:
-                    new_list += left_tmp[0]
-                    left_tmp = left_tmp[1:]
-            if len(left_tmp) == 1:
-                new_list += [left_tmp]
-            else:
-                new_list += left_tmp
-
-        return new_list
+        if right_i < len(right_side):
+            sorted_list += right_side[right_i:]
+        
+        elif left_i < len(left_side):
+            sorted_list += left_side[left_i:]
+        return sorted_list
 
 
+
+
+#l1 = [54,26,93,17,77,31,44,55,20]
+#print merge_sort(l1)
+
+
+
+#Sorting Algorithm Comparisons
+
+import time, timeit, random
 
 l1 = [54,26,93,17,77,31,44,55,20]
-print merge_sort(l1)
+l2 = [random.randrange(1,200) for i in range(1,1000)]
+#print l2
 
- 
+# Merge Sort
+m1 = timeit.Timer("merge_sort(l1)", "from __main__ import merge_sort, l1")
+m2 = timeit.Timer("merge_sort(l2)", "from __main__ import merge_sort, l2")
+#print "Merge Sort --> Small --> %.9f" % m1.timeit(number=1000)
+#print "Merge Sort --> Large --> %.9f" % m2.timeit(number=1000)
+
+# Shell Sort
+s1 = timeit.Timer("shell_sort(l1)", "from __main__ import shell_sort, l1")
+s2 = timeit.Timer("shell_sort(l2)", "from __main__ import shell_sort, l2")
+#print "Shell Sort --> Small --> %.9f" % s1.timeit(number=1000)
+#print "Shell Sort --> Large --> %.9f" % s2.timeit(number=1000)
+
+# Insertion Sort
+i1 = timeit.Timer("insertion_sort(l1)", "from __main__ import insertion_sort, l1")
+i2 = timeit.Timer("insertion_sort(l2)", "from __main__ import insertion_sort, l2")
+print "Insertion Sort --> Small --> %.9f" % i1.timeit(number=1000)
+print "Insertion Sort --> Large --> %.9f" % i2.timeit(number=1000)
 
 
 
 
+
+'''
+for i in range(1000,1000000,20000):
+    x = list(range(i))
+    t1 = Timer("x[random.randrange(%d)]" % i,"from __main__ import random, x")
+    print t1.timeit(number=1000)
+'''
