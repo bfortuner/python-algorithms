@@ -164,30 +164,33 @@ def merge_sort(alist):
         return alist
 
     else:
-        first = alist[:len(alist)/2]
-        second = alist[len(alist)/2:]
-        left_side = merge_sort(first)
-        right_side = merge_sort(second)
+        midpoint = len(alist)/2
+        lefthalf = alist[:midpoint]
+        righthalf = alist[midpoint:]
+
+        merge_sort(lefthalf)
+        merge_sort(righthalf)
 
         sorted_list = []
         left_i = 0
         right_i = 0
 
-        while left_i < len(left_side) and right_i < len(right_side):
+        while left_i < len(lefthalf) and right_i < len(righthalf):
 
-            if left_side[left_i] <= right_side[right_i]:
-                sorted_list += [left_side[left_i]]
+            if lefthalf[left_i] <= righthalf[right_i]:
+                sorted_list += [lefthalf[left_i]]
                 left_i += 1
 
             else:
-                sorted_list += [right_side[right_i]]
+                sorted_list += [righthalf[right_i]]
                 right_i += 1
 
-        if right_i < len(right_side):
-            sorted_list += right_side[right_i:]
+        if right_i < len(righthalf):
+            sorted_list += righthalf[right_i:]
         
-        elif left_i < len(left_side):
-            sorted_list += left_side[left_i:]
+        elif left_i < len(lefthalf):
+            sorted_list += lefthalf[left_i:]
+
         return sorted_list
 
 
@@ -221,11 +224,8 @@ s2 = timeit.Timer("shell_sort(l2)", "from __main__ import shell_sort, l2")
 # Insertion Sort
 i1 = timeit.Timer("insertion_sort(l1)", "from __main__ import insertion_sort, l1")
 i2 = timeit.Timer("insertion_sort(l2)", "from __main__ import insertion_sort, l2")
-print "Insertion Sort --> Small --> %.9f" % i1.timeit(number=1000)
-print "Insertion Sort --> Large --> %.9f" % i2.timeit(number=1000)
-
-
-
+#print "Insertion Sort --> Small --> %.9f" % i1.timeit(number=1000)
+#print "Insertion Sort --> Large --> %.9f" % i2.timeit(number=1000)
 
 
 '''
@@ -234,3 +234,110 @@ for i in range(1000,1000000,20000):
     t1 = Timer("x[random.randrange(%d)]" % i,"from __main__ import random, x")
     print t1.timeit(number=1000)
 '''
+
+
+
+
+
+## Quick Sort ##
+def quick_sort(alist,first,last):
+    if first < last:
+        splitpoint = partition(alist,first,last)
+        quick_sort(alist,first,splitpoint-1)
+        quick_sort(alist,splitpoint+1,last)
+    return alist
+
+# Helper function that sorts sublists
+def partition(alist, first, last):
+    pivot_value = alist[first]
+
+    leftmark = first + 1
+    rightmark = last
+
+    done = False
+    while not done:
+        while alist[leftmark] <= pivot_value and leftmark <= rightmark:
+            leftmark += 1
+        while alist[rightmark] >= pivot_value and rightmark >= leftmark:
+            rightmark -= 1
+        if rightmark < leftmark:
+            done = True
+        else:
+            tmp = alist[rightmark]
+            alist[rightmark] = alist[leftmark]
+            alist[leftmark] = tmp
+
+    alist[first] = alist[rightmark]
+    alist[rightmark] = pivot_value
+
+    return rightmark
+
+
+l1 = [54,26,93,17,77,31,44,55,20]
+l2 = [random.randrange(1,200) for i in range(1,1000)]
+l3 = [31, 26, 20, 17, 44]
+l4 = [26,31]
+#print partition(l1, 0, 8)
+#print quick_sort(l1)
+#print partition(l4)
+
+alist = [54,26,93,17,77,31,44,55,20]
+
+#print quick_sort(alist,0,len(alist)-1)
+#print(alist)
+
+
+
+## Textbook Quick Sort ##
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+
+   leftmark = first+1
+   rightmark = last
+
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and \
+               alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and \
+               rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+
+
+   return rightmark
+
+#alist = [54,26,93,17,77,31,44,55,20]
+#quickSort(alist)
+#print(alist)
+
+
+
+#Example - position after 2 partitions (one full and one sublist)
+l1 = [14, 17, 13, 15, 19, 10, 3, 16, 9, 12] 
+after1 = [9, 3, 10, 13, 12, 14, 19, 16, 15, 17] 
