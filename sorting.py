@@ -1,6 +1,6 @@
 ## Sorting Algorithms ##
 
-
+import random
 
 # Bubble Sort - ascending - My Implementation
 def bubble_sort(l):
@@ -58,7 +58,7 @@ def selection_sort(l):
     return l
 
 
-#print selection_sort([3,2,3,4,5,6,2,2,3,4])
+print selection_sort([3,2,3,4,5,6,2,2,3,4])
 
 
 # Insertion Sort
@@ -201,39 +201,6 @@ def merge_sort(alist):
 
 
 
-#Sorting Algorithm Comparisons
-
-import time, timeit, random
-
-l1 = [54,26,93,17,77,31,44,55,20]
-l2 = [random.randrange(1,200) for i in range(1,1000)]
-#print l2
-
-# Merge Sort
-m1 = timeit.Timer("merge_sort(l1)", "from __main__ import merge_sort, l1")
-m2 = timeit.Timer("merge_sort(l2)", "from __main__ import merge_sort, l2")
-#print "Merge Sort --> Small --> %.9f" % m1.timeit(number=1000)
-#print "Merge Sort --> Large --> %.9f" % m2.timeit(number=1000)
-
-# Shell Sort
-s1 = timeit.Timer("shell_sort(l1)", "from __main__ import shell_sort, l1")
-s2 = timeit.Timer("shell_sort(l2)", "from __main__ import shell_sort, l2")
-#print "Shell Sort --> Small --> %.9f" % s1.timeit(number=1000)
-#print "Shell Sort --> Large --> %.9f" % s2.timeit(number=1000)
-
-# Insertion Sort
-i1 = timeit.Timer("insertion_sort(l1)", "from __main__ import insertion_sort, l1")
-i2 = timeit.Timer("insertion_sort(l2)", "from __main__ import insertion_sort, l2")
-#print "Insertion Sort --> Small --> %.9f" % i1.timeit(number=1000)
-#print "Insertion Sort --> Large --> %.9f" % i2.timeit(number=1000)
-
-
-'''
-for i in range(1000,1000000,20000):
-    x = list(range(i))
-    t1 = Timer("x[random.randrange(%d)]" % i,"from __main__ import random, x")
-    print t1.timeit(number=1000)
-'''
 
 
 
@@ -273,10 +240,10 @@ def partition(alist, first, last):
     return rightmark
 
 
-l1 = [54,26,93,17,77,31,44,55,20]
-l2 = [random.randrange(1,200) for i in range(1,1000)]
-l3 = [31, 26, 20, 17, 44]
-l4 = [26,31]
+#l1 = [54,26,93,17,77,31,44,55,20]
+#l2 = [random.randrange(1,200) for i in range(1,1000)]
+#l3 = [31, 26, 20, 17, 44]
+#l4 = [26,31]
 #print partition(l1, 0, 8)
 #print quick_sort(l1)
 #print partition(l4)
@@ -287,3 +254,61 @@ alist = [54,26,93,17,77,31,44,55,20]
 #print(alist)
 
 
+
+
+#Sorting Algorithm Comparisons
+
+import time, timeit, random
+
+l1 = [54,26,93,17,77,31,44,55,20]
+l2 = [random.randrange(1,200) for i in range(1,201)]
+print l1
+
+
+
+
+# Bubble Sort
+b1 = timeit.Timer("bubble_sort(l1[:])", "from __main__ import bubble_sort, l1")
+b2 = timeit.Timer("bubble_sort(l2[:])", "from __main__ import bubble_sort, l2")
+#print "Bubble Sort --> Small --> %.9f" % b1.timeit(number=1000)
+#print "Bubble Sort --> Large --> %.9f" % b2.timeit(number=1000)
+
+# Selection Sort
+s1 = timeit.Timer("selection_sort(l1[:])", "from __main__ import selection_sort, l1")
+s2 = timeit.Timer("selection_sort(l2[:])", "from __main__ import selection_sort, l2")
+#print "Selection Sort --> Small --> %.9f" % s1.timeit(number=1000)
+#print "Selection Sort --> Large --> %.9f" % s2.timeit(number=1000)
+
+# Insertion Sort
+i1 = timeit.Timer("insertion_sort(l1[:])", "from __main__ import insertion_sort, l1")
+i2 = timeit.Timer("insertion_sort(l2[:])", "from __main__ import insertion_sort, l2")
+#print "Insertion Sort --> Small --> %.9f" % i1.timeit(number=1000)
+#print "Insertion Sort --> Large --> %.9f" % i2.timeit(number=1000)
+
+# Shell Sort
+sh1 = timeit.Timer("shell_sort(l1[:])", "from __main__ import shell_sort, l1")
+sh2 = timeit.Timer("shell_sort(l2[:])", "from __main__ import shell_sort, l2")
+#print "Shell Sort --> Small --> %.9f" % sh1.timeit(number=1000)
+#print "Shell Sort --> Large --> %.9f" % sh2.timeit(number=1000)
+
+# Merge Sort
+m1 = timeit.Timer("merge_sort(l1[:])", "from __main__ import merge_sort, l1")
+m2 = timeit.Timer("merge_sort(l2[:])", "from __main__ import merge_sort, l2")
+#print "Merge Sort --> Small --> %.9f" % m1.timeit(number=1000)
+#print "Merge Sort --> Large --> %.9f" % m2.timeit(number=1000)
+#print l1
+#print l2
+
+# Quick Sort
+q1 = timeit.Timer("quick_sort(l1[:], 0, len(l1)-1)", "from __main__ import quick_sort, l1")
+q2 = timeit.Timer("quick_sort(l2, 0, len(l2)-1)", "from __main__ import quick_sort, l2")
+#print "Quick Sort --> Small --> %.9f" % q1.timeit(number=1000)
+print "Quick Sort --> Large --> %.9f" % q2.timeit(number=1000)
+
+
+'''
+for i in range(1000,1000000,20000):
+    x = list(range(i))
+    t1 = Timer("x[random.randrange(%d)]" % i,"from __main__ import random, x")
+    #print t1.timeit(number=1000)
+'''
